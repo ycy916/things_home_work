@@ -1,0 +1,33 @@
+post:
+ tags:
+ - heart
+ summary: 하트 충전
+ description: |
+  1. 보너스 하트 충전
+  2. 비영구적 하트
+ produces:
+ - application/json
+ parameters:
+ - in: body
+   name: body
+   description: 하트 충전 구조
+   required: true
+   schema:
+    type: object
+    properties:
+     heart_count:
+      type: integer
+      description: 충전할 하트 카운트
+ responses:
+  200:
+   description: 성공
+   schema:
+    $ref: '../../openapi.yaml#/definitions/response/200'
+  400:
+   description: 입력값 오류
+   schema:
+    $ref: '../../openapi.yaml#/definitions/response/400'
+  500:
+   description: 입력값 오류
+   schema:
+    $ref: '../../openapi.yaml#/definitions/response/400'  

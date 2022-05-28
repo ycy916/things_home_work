@@ -1,0 +1,11 @@
+/user/login:
+ $ref: './user/login.yaml'
+/user/signup:
+ $ref: './user/signup.yaml'
+
+/heart/charging/heart:
+ $ref: './heart/charging_heart.yaml'
+/heart/charging/bonus_heart:
+ $ref: './heart/charging_bonus_heart.yaml'
+/heart/list:
+ $ref: './heart/heart_list.yaml'

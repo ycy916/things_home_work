@@ -1,0 +1,166 @@
+swagger: '2.0'
+info:
+  title: 띵스플로우 과제 API Docs
+  version: 0.0.1
+host: 'localhost:7300'
+basePath: /api/v1
+schemes:
+  - http
+  - https
+tags:
+  - name: user
+    description: 사용자에 관한 모든것
+  - name: heart
+    description: 마이페이지( 사용자 정보 수정 )
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: 사용자 접속하기
+      description: 아이디와 패스워드로 접속하기
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: 로그인 하기 위해서 필요한 항목
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: 이메일
+      responses:
+        '200':
+          description: 성공
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                description: 코드 번호 (0)
+              msg:
+                type: string
+                description: success
+              user_info:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: token
+                  refresh_token:
+                    type: string
+                    description: refresh token
+                  nickname:
+                    type: string
+                    description: 별명
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+  /user/signup:
+    post:
+      tags:
+        - user
+      summary: 회원가입
+      description: |
+        이메일
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: 회원가입에 필요한 항목
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: 이메일
+      responses:
+        '200':
+          description: 성공
+          schema:
+            title: Successful response
+            type: object
+            properties:
+              code:
+                type: integer
+                description: 코드 번호 (0)
+              msg:
+                type: string
+                description: success
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 시스템 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+definitions:
+  response:
+    '200':
+      title: Successful response
+      type: object
+      properties:
+        code:
+          type: integer
+          description: 코드 번호 (0)
+        msg:
+          type: string
+          description: success
+    '400':
+      title: request parameter error
+      type: object
+      properties:
+        code:
+          type: string
+          description: 에러 번호
+        msg:
+          type: string
+          description: 에러 메세지

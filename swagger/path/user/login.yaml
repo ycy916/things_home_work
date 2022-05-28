@@ -1,0 +1,50 @@
+post:
+ tags:
+ - user
+ summary: 사용자 접속하기
+ description: 아이디와 패스워드로 접속하기
+ produces:
+ - application/json
+ parameters:
+ - in: body
+   name: body
+   description: 로그인 하기 위해서 필요한 항목
+   required: true
+   schema:
+    type: object
+    properties:
+     email:
+      type: string
+      description: 이메일
+ responses:
+  200:
+   description: 성공
+   schema:
+    type: object
+    properties:
+     code:
+      type: integer
+      description: 코드 번호 (0)
+     msg:
+      type: string
+      description: success
+     user_info:
+      type: object
+      properties:
+       token:
+        type: string
+        description: token
+       refresh_token: 
+        type: string
+        description: refresh token
+       nickname:
+        type: string
+        description: 별명
+  400:
+   description: 입력값 오류
+   schema:
+    $ref: '../../openapi.yaml#/definitions/response/400'
+  500:
+   description: 입력값 오류
+   schema:
+    $ref: '../../openapi.yaml#/definitions/response/400'  

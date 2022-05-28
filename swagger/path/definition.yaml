@@ -1,0 +1,21 @@
+response:
+ 200:
+  title: Successful response
+  type: object
+  properties:
+   code:
+    type: integer
+    description: 코드 번호 (0)
+   msg:
+    type: string
+    description: success
+ 400:
+  title: request parameter error
+  type: object 
+  properties:
+   code:
+    type: string
+    description: 에러 번호
+   msg:
+    type: string
+    description: 에러 메세지  

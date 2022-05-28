@@ -1,0 +1,16 @@
+{
+    "PORT" : 7300,
+    "DB" : {
+        "HOST":"ec2-52-79-236-50.ap-northeast-2.compute.amazonaws.com",
+        "USERNAME":"things",
+        "PASSWORD":"thins2022!A",
+        "DATABASE" : "things",
+        "PORT" : 3306,
+        "CHARSET":"utf8mb4",
+        "encoding":"utf8",
+        "CONNECTION_LIMIT":10,
+        "TIME_ZONE":"Asia/Seoul"
+    },
+    "JWT_EXPIRE":"1d",
+    "REFRESH_JWT_EXPIRE":"30d"
+}
