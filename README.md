@@ -13,7 +13,7 @@ api 문서는 swagger로 대신하겠습니다.
 3. api/v1/heart/charging/heart 일반하트 충전
 4. api/v1/heart/charging/bonus_heart 보너스 하트 충전
 5. api/v1/heart/payment 로 하트 사용하기
-   1. 하트를 사용하게되면 소프트 delete로 deletedAt에 사용한 날짜가 들어가게 됩니다
+   1. 하트를 사용하게되면 soft delete로 deletedAt에 사용한 날짜가 들어가게 됩니다
 
 DB는 aws ec2에 임시로 준비했습니다.
  - config 폴더에 cofig.dev.json 참고 하시면 됩니다.
