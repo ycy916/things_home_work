@@ -10,10 +10,10 @@ schemes:
 
 tags:
 - name: user
-  description: 사용자에 관한 모든것
+  description: 사용자에 관한 api
 - name: heart
-  description: 마이페이지( 사용자 정보 수정 )
-
+  description: 하트 관련 api 
+  
 securityDefinitions:
   Bearer:
     type: apiKey

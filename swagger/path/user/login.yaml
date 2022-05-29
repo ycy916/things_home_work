@@ -2,7 +2,7 @@ post:
  tags:
  - user
  summary: 사용자 접속하기
- description: 아이디와 패스워드로 접속하기
+ description: 이메일로 접속하기
  produces:
  - application/json
  parameters:

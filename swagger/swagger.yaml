@@ -9,9 +9,9 @@ schemes:
   - https
 tags:
   - name: user
-    description: 사용자에 관한 모든것
+    description: 사용자에 관한 api
   - name: heart
-    description: 마이페이지( 사용자 정보 수정 )
+    description: 하트 관련 api
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -23,7 +23,7 @@ paths:
       tags:
         - user
       summary: 사용자 접속하기
-      description: 아이디와 패스워드로 접속하기
+      description: 이메일로 접속하기
       produces:
         - application/json
       parameters:
@@ -91,7 +91,7 @@ paths:
         - user
       summary: 회원가입
       description: |
-        이메일
+        이메일로 회원 가입하기 
       produces:
         - application/json
       parameters:
@@ -104,7 +104,7 @@ paths:
             properties:
               email:
                 type: string
-                description: 이메일
+                description: 가입할 이메일은 유니크 함
       responses:
         '200':
           description: 성공
@@ -142,6 +142,328 @@ paths:
               msg:
                 type: string
                 description: 에러 메세지
+  /heart/charging/heart:
+    post:
+      tags:
+        - heart
+      summary: 하트 충전
+      description: |
+        1. 일반 하트 충전
+        2. 영구적 하트
+      produces:
+        - application/json
+      security:
+        - Bearer: []
+      parameters:
+        - in: body
+          name: body
+          description: 하트 충전 구조
+          required: true
+          schema:
+            type: object
+            properties:
+              heart_count:
+                type: integer
+                description: 충전할 하트 카운트
+      responses:
+        '200':
+          description: 성공
+          schema:
+            title: Successful response
+            type: object
+            properties:
+              code:
+                type: integer
+                description: 코드 번호 (0)
+              msg:
+                type: string
+                description: success
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+  /heart/charging/bonus_heart:
+    post:
+      tags:
+        - heart
+      summary: 보너스 하트 충전
+      description: |
+        1. 보너스 하트 충전
+        2. 기한내 사용해야함 
+        3. 기한은 지정한 날짜 23:59:59까지로 저장됨
+      produces:
+        - application/json
+      security:
+        - Bearer: []
+      parameters:
+        - in: body
+          name: body
+          description: 하트 충전 구조
+          required: true
+          schema:
+            type: object
+            properties:
+              bonus_heart_count:
+                type: integer
+                description: 충전할 하트 카운트
+              validate_datetime:
+                type: string
+                descripption: 유효기간 예)2022-05-29
+      responses:
+        '200':
+          description: 성공
+          schema:
+            title: Successful response
+            type: object
+            properties:
+              code:
+                type: integer
+                description: 코드 번호 (0)
+              msg:
+                type: string
+                description: success
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+  '/heart/list/{page}':
+    get:
+      tags:
+        - heart
+      summary: 하트 충전 구매 내역 보기
+      description: |
+        1.등록한 토큰의 uuid로 해당 유저의 하트 충전 구매 내역 볼수 있음
+        2. 10개씩 페이지네이션 되어 있음
+      produces:
+        - application/json
+      security:
+        - Bearer: []
+      parameters:
+        - in: path
+          name: page
+          required: true
+          type: integer
+          description: page
+      responses:
+        '200':
+          description: 성공
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                descripption: 코드 번호
+              msg:
+                type: string
+                descripption: 에러 메세지
+              data:
+                type: object
+                properties:
+                  total_count:
+                    type: integer
+                  heart_info:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        idx:
+                          type: integer
+                          descripption: 인덱스
+                        count:
+                          type: integer
+                          descripption: 충전한 하트 수
+                        type:
+                          type: integer
+                          descripption: 일반하트(0) or 보너스 하트 (1)
+                        created_at:
+                          type: string
+                          descripption: '충전한 날짜 (ex:"2022-05-29 09:13:57")'
+                        validate_datetime:
+                          type: string
+                          descripption: '유효기간 (ex:"2022-05-29 09:13:57")'
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+  /heart/get_heart_and_bonus_heart:
+    get:
+      tags:
+        - heart
+      summary: 현재 보유하고 있는 하트 수 정보를 보여줌
+      description: |
+        1. 보너스 하트 
+        2. 일반하트 (영구적)
+      produces:
+        - application/json
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: 성공
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+              msg:
+                type: string
+              data:
+                type: object
+                properties:
+                  total_sum_bonus_heart:
+                    type: integer
+                    descripption: 현재 보유 중인 보너스 하트 (기한내 사용 해야 함)
+                  total_sum_heart:
+                    type: integer
+                    descripption: 현재 보유 중인 일반 하트 (영구적)
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+  /heart/payment:
+    post:
+      tags:
+        - heart
+      summary: 하트 사용하기
+      description: |
+        1. 해당 token의 uuid로 하트 지불하기
+        2. 기한이 임박한 보너스 하트 부터 차감
+        3. 일반하트는 먼저 충전한 하트 부터 차감
+
+        error code
+         100402 : 소유하고 있는 하트 수보다 사용할 하트 수가 많을 경우
+      produces:
+        - application/json
+      security:
+        - Bearer: []
+      parameters:
+        - in: body
+          name: body
+          descripption: 하트 사용하기 구조
+          required: true
+          schema:
+            type: object
+            properties:
+              payment_heart_count:
+                type: integer
+                descripption: 사용할 하트 카운트
+      responses:
+        '200':
+          description: 성공
+          schema:
+            title: Successful response
+            type: object
+            properties:
+              code:
+                type: integer
+                description: 코드 번호 (0)
+              msg:
+                type: string
+                description: success
+        '400':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
+        '500':
+          description: 입력값 오류
+          schema:
+            title: request parameter error
+            type: object
+            properties:
+              code:
+                type: string
+                description: 에러 번호
+              msg:
+                type: string
+                description: 에러 메세지
 definitions:
   response:
     '200':
@@ -164,3 +486,21 @@ definitions:
         msg:
           type: string
           description: 에러 메세지
+    heart_info:
+      type: object
+      properties:
+        idx:
+          type: integer
+          descripption: 인덱스
+        count:
+          type: integer
+          descripption: 충전한 하트 수
+        type:
+          type: integer
+          descripption: 일반하트(0) or 보너스 하트 (1)
+        created_at:
+          type: string
+          descripption: '충전한 날짜 (ex:"2022-05-29 09:13:57")'
+        validate_datetime:
+          type: string
+          descripption: '유효기간 (ex:"2022-05-29 09:13:57")'

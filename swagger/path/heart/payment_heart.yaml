@@ -1,10 +1,14 @@
 post:
  tags:
  - heart
- summary: 하트 충전
+ summary: 하트 사용하기
  description: |
-  1. 일반 하트 충전
-  2. 영구적 하트
+  1. 해당 token의 uuid로 하트 지불하기
+  2. 기한이 임박한 보너스 하트 부터 차감
+  3. 일반하트는 먼저 충전한 하트 부터 차감
+
+  error code
+   100402 : 소유하고 있는 하트 수보다 사용할 하트 수가 많을 경우
  produces:
  - application/json
  security:
@@ -12,14 +16,14 @@ post:
  parameters:
  - in: body
    name: body
-   description: 하트 충전 구조
+   descripption: 하트 사용하기 구조
    required: true
    schema:
     type: object
     properties:
-     heart_count:
+     payment_heart_count:
       type: integer
-      description: 충전할 하트 카운트
+      descripption: 사용할 하트 카운트
  responses:
   200:
    description: 성공

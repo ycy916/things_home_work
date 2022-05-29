@@ -32,8 +32,9 @@ BEGIN
 	  set o_ret = 0;
       set @page = i_page;
       set _start = _size * (@page - 1);
-      select count(*) into o_total_count from things.hearts where user_idx=@user_idx and deletedAt is null; 
-      select JSON_ARRAYAGG(JSON_OBJECT('idx',a.idx,'type',a.type,'validate_datetime',validate_datetime,'created_at', date_format(a.createdAt,'%Y-%m-%d %T'))) into o_heart_info from (select idx,type,validate_datetime,createdAt from things.hearts where user_idx=@user_idx and deletedAt is null order by idx desc limit _start,_size) as a;
+      select count(*) into o_total_count from things.hearts where user_idx=@user_idx and count > 0 and deletedAt is null; 
+      select JSON_ARRAYAGG(JSON_OBJECT('idx',a.idx,'count',a.count,'type',a.type,'validate_datetime',validate_datetime,'created_at', date_format(a.createdAt,'%Y-%m-%d %T'))) into o_heart_info from 
+      (select idx,type,validate_datetime,count,createdAt from things.hearts where user_idx=@user_idx and count > 0 and deletedAt is null order by idx desc limit _start,_size) as a;
       
     end if;
     select o_ret,o_heart_info,o_total_count;

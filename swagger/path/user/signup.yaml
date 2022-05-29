@@ -3,7 +3,7 @@ post:
   - user
   summary: 회원가입
   description: |
-   이메일
+   이메일로 회원 가입하기 
    
   produces:
   - application/json
@@ -17,7 +17,7 @@ post:
      properties:
       email:
        type: string
-       description: 이메일
+       description: 가입할 이메일은 유니크 함
   responses:
    200:
     description: 성공

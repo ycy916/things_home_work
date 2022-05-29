@@ -7,5 +7,9 @@
  $ref: './heart/charging_heart.yaml'
 /heart/charging/bonus_heart:
  $ref: './heart/charging_bonus_heart.yaml'
-/heart/list:
+/heart/list/{page}:
  $ref: './heart/heart_list.yaml'
+/heart/get_heart_and_bonus_heart:
+ $ref: './heart/get_heart_and_bonus_heart.yaml'
+/heart/payment:
+ $ref : './heart/payment_heart.yaml'

@@ -4,9 +4,12 @@ post:
  summary: 보너스 하트 충전
  description: |
   1. 보너스 하트 충전
-  2. 비영구적 하트
+  2. 기한내 사용해야함 
+  3. 기한은 지정한 날짜 23:59:59까지로 저장됨
  produces:
  - application/json
+ security:
+ - Bearer: []
  parameters:
  - in: body
    name: body
@@ -15,9 +18,13 @@ post:
    schema:
     type: object
     properties:
-     heart_count:
+     bonus_heart_count:
       type: integer
       description: 충전할 하트 카운트
+     validate_datetime:
+      type: string
+      descripption: 유효기간 예)2022-05-29
+     
  responses:
   200:
    description: 성공

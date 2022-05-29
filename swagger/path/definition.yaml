@@ -19,3 +19,21 @@ response:
    msg:
     type: string
     description: 에러 메세지  
+ heart_info:
+  type: object
+  properties:
+   idx:
+    type: integer
+    descripption: 인덱스
+   count:
+    type: integer
+    descripption: 충전한 하트 수
+   type:
+    type: integer
+    descripption: 일반하트(0) or 보너스 하트 (1)
+   created_at:
+    type: string
+    descripption: 충전한 날짜 (ex:"2022-05-29 09:13:57")
+   validate_datetime:
+    type: string
+    descripption: 유효기간 (ex:"2022-05-29 09:13:57")

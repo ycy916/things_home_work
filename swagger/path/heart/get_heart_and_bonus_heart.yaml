@@ -1,20 +1,15 @@
 get:
  tags:
  - heart
- summary: 하트 충전 구매 내역 보기
+ summary: 현재 보유하고 있는 하트 수 정보를 보여줌
  description: |
-  1.등록한 토큰의 uuid로 해당 유저의 하트 충전 구매 내역 볼수 있음
-  2. 10개씩 페이지네이션 되어 있음
+  1. 보너스 하트 
+  2. 일반하트 (영구적)
  produces:
  - application/json
  security:
  - Bearer: []
- parameters:
- - in: path
-   name: page
-   required: true
-   type: integer
-   description: page  
+
  responses:
   200:
    description: 성공
@@ -23,19 +18,18 @@ get:
     properties:
      code:
       type: integer
-      descripption: 코드 번호
      msg:
       type: string
-      descripption: 에러 메세지    
      data:
       type: object
       properties:
-       total_count:
+       total_sum_bonus_heart:
         type: integer
-       heart_info:
-        type: array
-        items:
-         $ref: '../../openapi.yaml#/definitions/response/heart_info'
+        descripption: 현재 보유 중인 보너스 하트 (기한내 사용 해야 함)
+       total_sum_heart: 
+        type: integer
+        descripption: 현재 보유 중인 일반 하트 (영구적)
+       
   400:
    description: 입력값 오류
    schema:

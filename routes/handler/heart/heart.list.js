@@ -36,9 +36,10 @@ const db_heart_list = async(uuid,page)=>{
     try{
         const _ret = await db.query('call sp_heart_list(?,?,@heart_info,@total_count,@o_ret)',[uuid,page]);
         console.info('_ret ',_ret);
+        console.info('_ret',_ret[0][0].o_heart_info);
         //const _data = _ret.length <= 0 ? null : [...ret];
         let _data =[]
-        if(_ret[0][0].o_heart_info.length > 0 ){
+        if(_ret[0][0].o_heart_info?.length > 0 ){
             _ret[0][0].o_heart_info.forEach(async element => {
                 let _item ={
                     ...element,
